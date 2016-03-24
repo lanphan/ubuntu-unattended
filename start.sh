@@ -91,6 +91,26 @@ apt-get -y dist-upgrade > /dev/null 2>&1
 apt-get -y autoremove > /dev/null 2>&1
 apt-get -y purge > /dev/null 2>&1
 
+echo "install more custom packages ..."
+# install more packages: wget, curl, git, build-essential, apt-transport-https ca-certificates
+apt-get -y install wget curl git build-essential apt-transport-https ca-certificates
+
+# GPG key for docker installation
+apt-key adv --keyserver hkp://p80.pool.sks-keyservers.net:80 --recv-keys 58118E89F3A912897C070ADBF76221572C52609D
+
+echo "deb https://apt.dockerproject.org/repo ubuntu-trusty main" > /etc/apt/sources.list.d/docker.list
+
+# install docker
+apt-get -y update
+apt-get -y install docker-engine
+
+# install docker-compose
+curl -L https://github.com/docker/compose/releases/download/1.6.2/docker-compose-`uname -s`-`uname -m` > /usr/local/bin/docker-compose
+chmod +x /usr/local/bin/docker-compose
+
+echo "finished custom package installation"
+
+
 # install puppet
 if [[ include_puppet_repo -eq 1 ]]; then
     # install puppet repo
