@@ -56,7 +56,7 @@ while true; do
     echo " which ubuntu edition would you like to remaster:"
     echo
     echo "  [1] Ubuntu 12.04.4 LTS Server amd64 - Precise Pangolin"
-    echo "  [2] Ubuntu 14.04.3 LTS Server amd64 - Trusty Tahr"
+    echo "  [2] Ubuntu 14.04.4 LTS Server amd64 - Trusty Tahr"
     echo
     read -p " please enter your preference: [1|2]: " ubver
     case $ubver in
@@ -64,9 +64,9 @@ while true; do
                 download_location="http://releases.ubuntu.com/12.04/"     # location of the file to be downloaded
                 new_iso_name="ubuntu-12.04.4-server-amd64-unattended.iso" # filename of the new iso file to be created
                 break;;
-        [2]* )  download_file="ubuntu-14.04.3-server-amd64.iso"             # filename of the iso to be downloaded
-                download_location="http://releases.ubuntu.com/14.04/"     # location of the file to be downloaded
-                new_iso_name="ubuntu-14.04.3-server-amd64-unattended.iso"   # filename of the new iso file to be created
+        [2]* )  download_file="ubuntu-14.04.4-server-amd64.iso"             # filename of the iso to be downloaded
+                download_location="http://releases.ubuntu.com/14.04.4/"     # location of the file to be downloaded
+                new_iso_name="ubuntu-14.04.4-server-amd64-unattended.iso"   # filename of the new iso file to be created
                 break;;
         * ) echo " please answer [1] or [2]";;
     esac
@@ -83,7 +83,7 @@ fi
 
 # ask the user questions about his/her preferences
 read -ep " please enter your preferred timezone: " -i "${timezone}" timezone
-read -ep " please enter your preferred username: " -i "netson" username
+read -ep " please enter your preferred username: " -i "admin" username
 read -sp " please enter your preferred password: " password
 printf "\n"
 read -sp " confirm your preferred password: " password2
@@ -108,7 +108,7 @@ fi
 seed_file="netson.seed"
 if [[ ! -f $tmp/$seed_file ]]; then
     echo -h " downloading $seed_file: "
-    download "https://github.com/netson/ubuntu-unattended/raw/master/$seed_file"
+    download "https://github.com/lanphan/ubuntu-unattended/raw/master/$seed_file"
 fi
 
 # install required packages
@@ -149,7 +149,7 @@ cd $tmp/iso_new
 echo en > $tmp/iso_new/isolinux/lang
 
 # set late command
-late_command="chroot /target wget -O /home/$username/start.sh https://github.com/netson/ubuntu-unattended/raw/master/start.sh ;\
+late_command="chroot /target wget -O /home/$username/start.sh https://github.com/lanphan/ubuntu-unattended/raw/master/start.sh ;\
     chroot /target chmod +x /home/$username/start.sh ;"
 
 # copy the netson seed file to the iso
